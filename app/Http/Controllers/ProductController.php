@@ -18,13 +18,12 @@ class ProductController extends Controller
 
     }
 
-    public function details($id) {
-        $item = Item::find($id);
-        $categories = Category::find($id);
-        //in order to get the category name w/ item details, we'll pass both of them over.
-        return view('products.details')->with('item', $item)->with('categories', $categories);
+    public function details($item_id, $category_id) {
+        $item = Item::find($item_id);
+        $category = Category::where('id', $category_id)->first();
+        return view('products.details')->with('item', $item)->with('categories', $category);
     }
-
+    
     public function create()
     {
         $categories = Category::all()->sortBy('name');

@@ -15,6 +15,6 @@ class Category extends Model
     protected $dates = ['deleted_at'];
 
     public function items() {
-        return $this->hasMany('\App\Item','category_id', 'id')->orderBy('name','ASC');
+        return $this->hasMany(Item::class,'category_id', 'id')->orderBy('name','ASC');
     }
 }

@@ -24,7 +24,7 @@ Laravel Project
         </ul>
       </div>
       <div class="col-md-9">
-        <h1>Product Page</h1>
+        <h1>View Products</h1>
         <hr>
         <table class="table">
           <thead>
@@ -39,7 +39,8 @@ Laravel Project
             
             @foreach ($items as $item)
               <tr>
-                <td><a href="{{ route('products.details', $item->id) }}"><img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
+                <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}"><img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
+
                 <td>{{ $item->title}}</td>
                 <td>{{ $item->price }}</td>
                 <td><a href="" class="btn btn-primary">Buy Me</a></td>
