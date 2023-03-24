@@ -16,6 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +160,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,

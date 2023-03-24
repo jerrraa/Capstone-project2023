@@ -61,19 +61,42 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->sku = $request->sku;
 
-        //save image
+        //refer to this website i used to implemenet the resize feature.
+        //https://www.laravelcode.com/post/laravel-8-image-resize-and-upload-with-intervention-image
+
         if ($request->hasFile('picture')) {
             $image = $request->file('picture');
-
+        
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
-
+            //we'll store our image we inserted into the public folder.
             $image = Image::make($image);
             Storage::disk('public')->put($location, (string) $image->encode());
+        
+            //we'll create a thumbnail image to be stored.
+            //with a width/height of 250px.
+            $thumbnail = Image::make($image);
+            $thumbnail->resize(250, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            //name our filename with the prefix of tn_.
+            $thumbnail_location = 'images/items/tn_' . $filename;
+            //then store it with our new name.
+            Storage::disk('public')->put($thumbnail_location, (string) $thumbnail->encode());
+            
+            //after we created our thumbnail, we'll store it.
+            $lrg_image = Image::make($image);
+            //resize the 350px as before.
+            $lrg_image->resize(350, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            //same as before, except we use lrg_ as our prefix.
+            $larimg_location = 'images/items/lrg_' . $filename;
+            Storage::disk('public')->put($larimg_location, (string)  $lrg_image->encode());
+        
             $item->picture = $filename;
         }
-
-        $item->save(); //saves to DB
+        $item->save();
 
         Session::flash('success','The item has been added');
 
@@ -132,33 +155,47 @@ class ItemController extends Controller
         $item->price = $request->price;
         $item->quantity = $request->quantity;
         $item->sku = $request->sku;
-
-        //save image
+        //copied pasted from the store function.
         if ($request->hasFile('picture')) {
             $image = $request->file('picture');
-
+        
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
-
+            //we'll store our image we inserted into the public folder.
             $image = Image::make($image);
             Storage::disk('public')->put($location, (string) $image->encode());
-
-            if (isset($item->picture)) {
-                $oldFilename = $item->picture;
-                Storage::delete('public/images/items/'.$oldFilename);                
-            }
-
+        
+            //we'll create a thumbnail image to be stored.
+            //with a width/height of 250px.
+            $thumbnail = Image::make($image);
+            $thumbnail->resize(250, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            //name our filename with the prefix of tn_.
+            $thumbnail_location = 'images/items/tn_' . $filename;
+            //then store it with our new name.
+            Storage::disk('public')->put($thumbnail_location, (string) $thumbnail->encode());
+            
+            //after we created our thumbnail, we'll store it.
+            $lrg_image = Image::make($image);
+            //resize the 350px as before.
+            $lrg_image->resize(350, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            //same as before, except we use lrg_ as our prefix.
+            $larimg_location = 'images/items/lrg_' . $filename;
+            Storage::disk('public')->put($larimg_location, (string)  $lrg_image->encode());
+        
             $item->picture = $filename;
         }
+        $item->save();
 
-        $item->save(); //saves to DB
-
-        Session::flash('success','The item has been updated');
+        Session::flash('success','The item has been added');
 
         //redirect
         return redirect()->route('items.index');
-        
     }
+
 
     /**
      * Remove the specified resource from storage.
