@@ -18,6 +18,7 @@ Route::resource('items', '\App\Http\Controllers\ItemController');
 Route::resource('categories', '\App\Http\Controllers\CategoryController');
 Route::resource('products', '\App\Http\Controllers\ProductController');
 Route::get('/products/{id}{cid}/details', 'App\Http\Controllers\ProductController@details')->name('products.details');
+Route::get('/products/{category}/select', 'App\Http\Controllers\ProductController@select')->name('products.select');
 
 //route for details page from products
 

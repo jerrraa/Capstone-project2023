@@ -30,7 +30,7 @@ Laravel Project
                 
                 <h1>{{ $item->title }}</h1>
                 <h2>--------------------</h2>
-                <h3>ID: {{ $item->id }}</h3>
+                <h3>Product ID: {{ $item->id }}</h3>
                 <h3>Category: {{ $categories->name }}</h3>
                 <h3>Description: {{ $item->description }}</h3>
                 <h3>Price: ${{ $item->price }}</h3>

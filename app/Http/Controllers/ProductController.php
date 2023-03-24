@@ -24,6 +24,14 @@ class ProductController extends Controller
         return view('products.details')->with('item', $item)->with('categories', $category);
     }
     
+    public function select($id)
+    {
+        $categories = Category::all()->sortBy('name');
+        $items = Item::where('category_id', $id)->get();
+        return view('products.select', compact('categories', 'items'));
+    }
+    
+
     public function create()
     {
         $categories = Category::all()->sortBy('name');
