@@ -159,12 +159,19 @@ class ItemController extends Controller
         if ($request->hasFile('picture')) {
             $image = $request->file('picture');
         
+
+            
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
             //we'll store our image we inserted into the public folder.
             $image = Image::make($image);
             Storage::disk('public')->put($location, (string) $image->encode());
         
+            if (isset($item->picture)) {
+                $oldFilename = $item->picture;
+                Storage::delete('public/images/items/'.$oldFilename);                
+            }
+
             //we'll create a thumbnail image to be stored.
             //with a width/height of 250px.
             $thumbnail = Image::make($image);
@@ -190,7 +197,7 @@ class ItemController extends Controller
         }
         $item->save();
 
-        Session::flash('success','The item has been added');
+        Session::flash('success','The item has been updated.');
 
         //redirect
         return redirect()->route('items.index');
