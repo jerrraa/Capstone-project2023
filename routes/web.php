@@ -19,15 +19,14 @@ Route::resource('categories', '\App\Http\Controllers\CategoryController');
 Route::resource('products', '\App\Http\Controllers\ProductController');
 Route::get('/products/{id}{cid}/details', 'App\Http\Controllers\ProductController@details')->name('products.details');
 Route::get('/products/{category}/select', 'App\Http\Controllers\ProductController@select')->name('products.select');
+//i added the shop as however it'll be called from show, if i called SHOP first i'll recieve a error.
+Route::get('/products/shop', 'App\Http\Controllers\ProductController@shop')->name('products.shop');
+
 
 //route for details page from products
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/details', function () {
-    return view('details');
 });
 
 Auth::routes();

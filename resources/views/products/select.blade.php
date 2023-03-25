@@ -40,6 +40,7 @@ Laravel Project
     <div class="row">
       <div class="col-md-3">
         <h3>Categories</h3>
+        
         <ul class="list-group">
           @foreach ($categories->take(7) as $category)
             
@@ -49,6 +50,7 @@ Laravel Project
       </div>
       <div class="col-md-9">
         <h1>View Products</h1>
+        <a href="{{ route('products.shop') }}" class="btn btn-info btn-lg">Cart Page</a>
         <hr>
         <table class="table">
           <thead>
@@ -60,18 +62,21 @@ Laravel Project
             </tr>
           </thead>
           <tbody>
-            
             @foreach ($items as $item)
               <tr>
-          
                 <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">
-                  <img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
+                <img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
                 <td>{{ $item->title}}</td>
                 <td>${{ $item->price }}</td>
-
-                    <td><a href="" class="btn btn-primary">Buy Me</a></td>
-            
-                
+                <td>        
+              {!! Form::open(['route' => 'products.store', 'data-parsley-validate' => '', 'files' => true]) !!}
+                  {{ Form::hidden('item_id', $item->id) }}
+                  {{ Form::hidden('session_id', session()->getId()) }}
+                  {{ Form::hidden('ip_address', request()->ip()) }}
+                  {{ Form::hidden('price', $item->price) }}
+                  {{ Form::hidden('quantity', 1) }}
+                  {{ Form::submit('Buy Me', ['class' => 'btn btn-primary']) }}
+              {!! Form::close() !!}
               </tr>
             @endforeach
           </tbody>

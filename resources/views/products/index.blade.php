@@ -16,7 +16,6 @@
       //if it's not the same, destroy the session and start a new one.
       session_destroy();
       session_start();
-      $_SESSION['session_id'] = uniqid();
       $_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
     }
   }
@@ -34,6 +33,7 @@ Laravel Project
 @section('css')
 {!! Html::style('/css/parsley.css') !!}
 @endsection
+
 <!-- resources/views/products/index.blade.php -->
 @section('content')
 
@@ -50,6 +50,7 @@ Laravel Project
       </div>
       <div class="col-md-9">
         <h1>View Products</h1>
+        <a href="{{ route('products.shop') }}" class="btn btn-info btn-lg">Cart Page</a>
         <hr>
         <table class="table">
           <thead>
@@ -68,8 +69,16 @@ Laravel Project
                 <img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
                 <td>{{ $item->title}}</td>
                 <td>${{ $item->price }}</td>
-                <td><a href="" class="btn btn-primary">Buy Me</a></td>
-                
+                <td>        
+              {!! Form::open(['route' => 'products.store', 'data-parsley-validate' => '', 'files' => true]) !!}
+                  {{ Form::hidden('item_id', $item->id) }}
+                  {{ Form::hidden('session_id', session()->getId()) }}
+                  {{ Form::hidden('ip_address', request()->ip()) }}
+                  {{ Form::hidden('price', $item->price) }}
+                  {{ Form::hidden('quantity', 1) }}
+                  {{ Form::submit('Buy Me', ['class' => 'btn btn-primary']) }}
+              {!! Form::close() !!}
+              
               </tr>
             @endforeach
           </tbody>
