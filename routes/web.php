@@ -19,7 +19,8 @@ Route::resource('categories', '\App\Http\Controllers\CategoryController');
 Route::resource('products', '\App\Http\Controllers\ProductController');
 Route::get('/products/{id}{cid}/details', 'App\Http\Controllers\ProductController@details')->name('products.details');
 Route::get('/products/{category}/select', 'App\Http\Controllers\ProductController@select')->name('products.select');
-//i added the shop as however it'll be called from show, if i called SHOP first i'll recieve a error.
+//if you select SHOP in the route, it'll be directed to the SHOW function and blade file. 
+//it kept causing errors in my code if i didn't do this however hope it makes sense.
 Route::get('/products/shop', 'App\Http\Controllers\ProductController@shop')->name('products.shop');
 
 
