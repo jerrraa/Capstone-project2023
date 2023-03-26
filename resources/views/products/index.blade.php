@@ -40,7 +40,12 @@ Laravel Project
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <h3>Categories</h3>
+        
+        <h2>Categories</h2>
+
+          <b>Select one of the categories below to fliter your products.<b>
+  
+        <hr/>
         <ul class="list-group">
           @foreach ($categories->take(10) as $category)
             
@@ -49,8 +54,7 @@ Laravel Project
         </ul>
       </div>
       <div class="col-md-9">
-        <h1>View Products</h1>
-        <a href="{{ route('products.shop') }}" class="btn btn-info btn-lg">Cart Page</a>
+        <h2>View Products</h2>
         <hr>
         <table class="table">
           <thead>
@@ -66,14 +70,14 @@ Laravel Project
             @foreach ($items as $item)
               <tr>
                 <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">
-                <img src="{{ Storage::url('images/items/'.$item->picture) }}" style='width:80px; height:80px;'></a></td>
+                <img src="{{ Storage::url('images/items/tn_'.$item->picture) }}" style=''></a></td>
                 <td>{{ $item->title}}</td>
                 <td>${{ $item->price }}</td>
                 <td>        
               {!! Form::open(['route' => 'products.store', 'data-parsley-validate' => '', 'files' => true]) !!}
                   {{ Form::hidden('item_id', $item->id) }}
-                  {{ Form::hidden('session_id', session()->getId()) }}
-                  {{ Form::hidden('ip_address', request()->ip()) }}
+                  {{ Form::hidden('session_id', $_SESSION['session_id']) }}
+                  {{ Form::hidden('ip_address', $_SESSION['ip_address']) }}
                   {{ Form::hidden('price', $item->price) }}
                   {{ Form::hidden('quantity', 1) }}
                   {{ Form::submit('Buy Me', ['class' => 'btn btn-primary']) }}
@@ -85,6 +89,13 @@ Laravel Project
         </table>
       </div>
     </div>
+    <style>
+      hr {
+        height: 1px;
+        background-color: black;
+      }
+
+    </style>
   </div>
 @endsection
 

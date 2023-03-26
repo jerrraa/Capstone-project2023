@@ -43,6 +43,7 @@
             <li class="{{ Request::is('/items/index') || Request::is('items') ? "active" : "" }}"><a href="/items">Items</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <a href="{{ route('products.shop') }}" class="btn btn-info btn-lg">Cart Page</a>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

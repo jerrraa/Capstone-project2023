@@ -74,9 +74,9 @@ class ItemController extends Controller
             Storage::disk('public')->put($location, (string) $image->encode());
         
             //we'll create a thumbnail image to be stored.
-            //with a width/height of 250px.
+            //with a width/height of 80px.
             $thumbnail = Image::make($image);
-            $thumbnail->resize(250, null, function ($constraint) {
+            $thumbnail->resize(80, 80, function ($constraint) {
                 $constraint->aspectRatio();
             });
             //name our filename with the prefix of tn_.
@@ -86,8 +86,8 @@ class ItemController extends Controller
             
             //after we created our thumbnail, we'll store it.
             $lrg_image = Image::make($image);
-            //resize the 350px as before.
-            $lrg_image->resize(350, null, function ($constraint) {
+            //resize the 400px as before.
+            $lrg_image->resize(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
             });
             //same as before, except we use lrg_ as our prefix.
@@ -157,10 +157,16 @@ class ItemController extends Controller
         $item->sku = $request->sku;
         //copied pasted from the store function.
         if ($request->hasFile('picture')) {
-            $image = $request->file('picture');
-        
-
             
+            $image = $request->file('picture');
+            //in order to prevent images from building up if you update it
+            //it'll overwrite the original file w/ new images or orginial image.
+            $oldfilename = $item->picture;
+            Storage::delete('public/images/items/tn_'. $oldfilename); 
+            Storage::delete('public/images/items/lrg_'. $oldfilename);   
+            Storage::delete('public/images/items/'. $oldfilename);     
+
+
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
             //we'll store our image we inserted into the public folder.
@@ -173,9 +179,9 @@ class ItemController extends Controller
             }
 
             //we'll create a thumbnail image to be stored.
-            //with a width/height of 250px.
+            //with a width/height of 80px.
             $thumbnail = Image::make($image);
-            $thumbnail->resize(250, null, function ($constraint) {
+            $thumbnail->resize(80, 80, function ($constraint) {
                 $constraint->aspectRatio();
             });
             //name our filename with the prefix of tn_.
@@ -185,8 +191,8 @@ class ItemController extends Controller
             
             //after we created our thumbnail, we'll store it.
             $lrg_image = Image::make($image);
-            //resize the 350px as before.
-            $lrg_image->resize(350, null, function ($constraint) {
+            //resize the 400px as before.
+            $lrg_image->resize(400, 400, function ($constraint) {
                 $constraint->aspectRatio();
             });
             //same as before, except we use lrg_ as our prefix.
@@ -215,7 +221,12 @@ class ItemController extends Controller
         $item = Item::find($id);
         if (isset($item->picture)) {
             $oldFilename = $item->picture;
-            Storage::delete('public/images/items/'.$oldFilename);                
+            Storage::delete('public/images/items/'.$oldFilename);  
+            //removes the prefixs so it'll remove all pictures in the folder.
+            // for lrg_ prefix
+            Storage::delete('public/images/items/lrg_'.$oldFilename);
+            // for tn_ prefix
+            Storage::delete('public/images/items/tn_'. $oldFilename);           
         }
         $item->delete();
 

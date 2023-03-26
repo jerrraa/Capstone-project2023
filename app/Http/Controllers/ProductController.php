@@ -66,5 +66,42 @@ class ProductController extends Controller
         //this will gather the items from the category that was selected.
         return view('products.select', compact('categories', 'items'));
     }
-    
+
+    public function destroy($id) {
+        //i assumed there weren't any validation so i didn't add it.
+        //deletes all items in the database relating to the id.
+        $products = Product::find($id);
+        $products->delete();
+
+        return redirect()->route('products.shop');
+
+    }
+
+    public function update(Request $request, $id) {
+        //validate only the quanity. as it's only changable in the shop page.
+        $this->validate($request, [
+            'quantity' => 'required|integer'
+        ]);
+    //replace the current quantity with the new quantity.
+        $products = Product::find($id);
+        $products->quantity = $request->quantity;
+    //save new quantity. if successful it'll update.
+        $products->save();
+
+        return redirect()->route('products.shop');
+
+    }
+    public function check_order(Request $request) {
+
+        //validate the data
+        $this->validate($request, [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+        ]);
+        //we'll transfer all the data to the view.
+        
+
+    }
 }
