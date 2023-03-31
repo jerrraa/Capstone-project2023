@@ -22,7 +22,6 @@ Route::get('/products/{category}/select', 'App\Http\Controllers\ProductControlle
 //if you select SHOP in the route, it'll be directed to the SHOW function and blade file. 
 //it kept causing errors in my code if i didn't do this however hope it makes sense.
 Route::get('/products/shop', 'App\Http\Controllers\ProductController@shop')->name('products.shop');
-//Route::destroy('/products/{id}', 'App\Http\Controllers\ProductController@destroy')->name('products.destroy');
 
 
 //route for details page from products

@@ -38,7 +38,7 @@ Laravel Project
 
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <h2>Categories</h2>
         <b>Select one of the categories below to fliter your products.<b>
   

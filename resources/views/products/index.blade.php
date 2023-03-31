@@ -39,16 +39,12 @@ Laravel Project
 
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
-        
+      <div class="col-md-2">
         <h2>Categories</h2>
-
           <b>Select one of the categories below to fliter your products.<b>
-  
         <hr/>
         <ul class="list-group">
           @foreach ($categories->take(10) as $category)
-            
             <li class="list-group-item"><a href="{{ route('products.select', $category->id) }}">{{ $category->name }}</a></li>
           @endforeach
         </ul>
@@ -80,7 +76,7 @@ Laravel Project
                   {{ Form::hidden('ip_address', $_SESSION['ip_address']) }}
                   {{ Form::hidden('price', $item->price) }}
                   {{ Form::hidden('quantity', 1) }}
-                  {{ Form::submit('Buy Me', ['class' => 'btn btn-primary']) }}
+                  {{ Form::submit('Add to Cart', ['class' => 'btn btn-primary']) }}
               {!! Form::close() !!}
               
               </tr>

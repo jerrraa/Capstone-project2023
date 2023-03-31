@@ -228,6 +228,7 @@ class ItemController extends Controller
             // for tn_ prefix
             Storage::delete('public/images/items/tn_'. $oldFilename);           
         }
+        $item->
         $item->delete();
 
         Session::flash('success','The item has been deleted');
