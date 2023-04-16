@@ -32,14 +32,21 @@ Laravel Project
 
 @section('scripts')
 {!! Html::script('/bower_components/parsleyjs/dist/parsley.min.js') !!}
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#description').summernote();
+    });
+</script>
 @endsection
 
 @section('css')
 {!! Html::style('/css/parsley.css') !!}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
-	
+
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<h1>Add New Item</h1>
@@ -60,10 +67,10 @@ Laravel Project
 						<option value='{{ $category->id }}'>{{ $category->name }}</option>
 					@endforeach
 				</select>
-
-			    {{ Form::label('description', 'Description:', ['style'=>'margin-top:20px']) }}
-			    {{ Form::textarea('description', null, ['class'=>'form-control', 
-				                                 'data-parsley-required'=>'']) }}
+				
+				{{ Form::label('description', 'Description:', ['style'=>'margin-top:20px']) }}
+			    {{ Form::textarea('description', null, ['class'=>'form-control', 'style'=>'', 
+			                                  'data-parsley-required'=>'']) }}
 
 				{{ Form::label('price', 'Price:', ['style'=>'margin-top:20px']) }}
 			    {{ Form::text('price', null, ['class'=>'form-control', 'style'=>'', 

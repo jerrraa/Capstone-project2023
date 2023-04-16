@@ -59,6 +59,7 @@ Laravel Project
               <th>Title</th>
               <th>Price</th>
               <th>Purchase</th>
+              <th>Add to Cart</th>
             </tr>
           </thead>
           <tbody>
@@ -67,8 +68,11 @@ Laravel Project
               <tr>
                 <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">
                 <img src="{{ Storage::url('images/items/tn_'.$item->picture) }}" style=''></a></td>
-                <td>{{ $item->title}}</td>
+                <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">{{ $item->title}}</a></td>
                 <td>${{ $item->price }}</td>
+           
+                <td>
+                  <a href="" class="btn btn-primary">Buy Now</a>
                 <td>        
               {!! Form::open(['route' => 'products.store', 'data-parsley-validate' => '', 'files' => true]) !!}
                   {{ Form::hidden('item_id', $item->id) }}
@@ -76,8 +80,14 @@ Laravel Project
                   {{ Form::hidden('ip_address', $_SESSION['ip_address']) }}
                   {{ Form::hidden('price', $item->price) }}
                   {{ Form::hidden('quantity', 1) }}
-                  {{ Form::submit('Add to Cart', ['class' => 'btn btn-primary']) }}
+                
+                  {{ Form::submit('Add to Cart', ['class' => 'btn btn-success']) }}
               {!! Form::close() !!}
+                
+              
+
+                  
+
               
               </tr>
             @endforeach

@@ -12,9 +12,11 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "sass": "^1.56.1",
+        "tinymce": "^6.4.1",
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "bootstrap": "^5.2.3"
+        "bootstrap": "^5.2.3",
+        "summernote": "^0.8.20"
     }
 }

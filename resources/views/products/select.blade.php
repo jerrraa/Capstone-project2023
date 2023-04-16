@@ -67,7 +67,7 @@ Laravel Project
               <tr>
                 <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">
                 <img src="{{ Storage::url('images/items/tn_'.$item->picture) }}" style=''></a></td>
-                <td>{{ $item->title}}</td>
+                <td><a href="{{ route('products.details', [$item->id, $item->category->id]) }}">{{ $item->title}}</a></td>
                 <td>${{ $item->price }}</td>
                 <td>        
               {!! Form::open(['route' => 'products.store', 'data-parsley-validate' => '', 'files' => true]) !!}
